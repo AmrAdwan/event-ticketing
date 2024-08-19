@@ -1,0 +1,69 @@
+/* body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+ */
+
+Set the background color of the navbar .navbar {
+  background-color: #e1e9f1; /* A dark gray color for contrast */
+  padding: 10px 20px;
+}
+
+/* Align the navbar brand, links, and Google Translate properly */
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.navbar-nav {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.nav-item {
+  margin-right: 15px;
+}
+
+#google_translate_element {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+/* Remove the Google Translate banner that sometimes appears at the top */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+/* Ensure the body doesn't shift down when the Google Translate element loads */
+body {
+  top: 0px !important;
+}
+
+/* Custom styles for the Google Translate dropdown */
+.goog-te-gadget-simple {
+  background-color: #343a40 !important;
+  border-color: #343a40 !important;
+  padding: 0px;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value span {
+  color: white !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value span:hover,
+.goog-te-gadget-simple .goog-te-menu-value span:focus {
+  color: #007bff !important; /* Bootstrap primary color */
+  text-decoration: none;
+}
