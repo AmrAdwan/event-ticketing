@@ -12,47 +12,93 @@
 
 .ticket-details-and-payment {
   display: flex;
-  gap: 40px; /* Adjust the space between the two sections */
+  gap: 40px;
+  max-width: 900px;
+  width: 100%;
+  background-color: #2a2a2a;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .ticket-info {
-  max-width: 50%;
+  flex: 1;
   text-align: left;
 }
 
+.ticket-info h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.ticket-info p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
 .payment-info {
-  max-width: 50%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-/* Payment elements */
 .custom-payment-element {
-  background-color: #add8e6; /* Lighter background for payment options */
-  padding: 15px;
-  border-radius: 5px;
-  color: #ffffff; /* Ensure the text color is white for better readability */
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Style the PaymentElement iframe to inherit the background and text color */
-.payment-element iframe {
-  background-color: #2e2e2e;
-  color: #ffffff; /* Ensure text inside the iframe is white */
-}
-
-/* Adjust the color of text inside the payment options */
-.payment-option {
-  background-color: #2e2e2e; /* Lighter background */
-  color: #ffffff; /* White text */
-  border: 1px solid #444; /* Darker border */
-}
-
-/* Divider */
-.divider {
-  width: 100%;
-  border: 1px solid #444; /* Darker border for the divider */
+.price-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
   margin: 20px 0;
 }
 
-/* Pay button styling */
+.ticket-quantity {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.ticket-quantity label {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-controls button {
+  background-color: #5dc4e6;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
+.quantity-controls button:disabled {
+  background-color: #ccc;
+}
+
+.quantity-controls span {
+  font-size: 18px;
+  margin: 0 10px;
+}
+
+.divider {
+  width: 100%;
+  border: 1px solid #444;
+  margin: 20px 0;
+}
+
 .pay-button {
   background-color: #007bff;
   color: white;
@@ -62,6 +108,7 @@
   border-radius: 5px;
   cursor: pointer;
   text-align: center;
+  width: 100%;
 }
 
 .pay-button:hover {

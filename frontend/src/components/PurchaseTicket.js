@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
-
+import { useNavigate } from "react-router-dom";
 import {
   Elements,
   PaymentElement,
@@ -13,10 +13,11 @@ import "./PurchaseTicket.css";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
-const CheckoutForm = ({ ticket }) => {
+const CheckoutForm = ({ ticket, quantity, setQuantity, totalPrice }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [clientSecret, setClientSecret] = useState("");
+  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
     if (!ticket) return;
@@ -24,12 +25,13 @@ const CheckoutForm = ({ ticket }) => {
     axios
       .post("http://localhost:5000/api/payment/create-payment-intent", {
         ticketId: ticket._id,
+        quantity, // Send the quantity to backend
       })
       .then((res) => {
         setClientSecret(res.data.clientSecret);
       })
       .catch((err) => console.error("Failed to create payment intent", err));
-  }, [ticket]);
+  }, [ticket, quantity]); // Recreate payment intent when quantity changes
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,14 +50,39 @@ const CheckoutForm = ({ ticket }) => {
     if (error) {
       console.error("Payment failed:", error.message);
     } else {
+      navigate("/order-success"); // Navigate to the success page
       console.log("Payment successful!");
     }
+  };
+
+  const handleQuantityChange = (change) => {
+    setQuantity((prevQuantity) => Math.max(1, prevQuantity + change)); // Ensure quantity is at least 1
   };
 
   return (
     <form onSubmit={handleSubmit} className="checkout-form">
       {clientSecret && (
         <>
+          <div className="ticket-quantity">
+            <label>Quantity:</label>
+            <div className="quantity-controls">
+              <button
+                type="button"
+                onClick={() => handleQuantityChange(-1)}
+                disabled={quantity <= 1}
+              >
+                -
+              </button>
+              <span>{quantity}</span>
+              <button type="button" onClick={() => handleQuantityChange(1)}>
+                +
+              </button>
+            </div>
+          </div>
+          <div className="price-info">
+            <span>Total Price:</span>
+            <span>€{totalPrice.toFixed(2)}</span>
+          </div>
           <PaymentElement className="custom-payment-element" />
           <hr className="divider" />
           <button
@@ -63,7 +90,7 @@ const CheckoutForm = ({ ticket }) => {
             disabled={!stripe || !clientSecret}
             className="pay-button"
           >
-            Pay €{ticket.price}
+            Pay €{totalPrice.toFixed(2)}
           </button>
         </>
       )}
@@ -75,6 +102,8 @@ const PurchaseTicket = () => {
   const { urlSlug } = useParams();
   const [ticket, setTicket] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     axios
@@ -82,10 +111,12 @@ const PurchaseTicket = () => {
       .then((res) => {
         if (res.data) {
           setTicket(res.data);
+          setTotalPrice(res.data.price);
           return axios.post(
             "http://localhost:5000/api/payment/create-payment-intent",
             {
               ticketId: res.data._id,
+              quantity: 1, // Default quantity
             }
           );
         } else {
@@ -104,24 +135,44 @@ const PurchaseTicket = () => {
       );
   }, [urlSlug]);
 
+  useEffect(() => {
+    if (ticket) {
+      setTotalPrice(ticket.price * quantity);
+    }
+  }, [quantity, ticket]);
+
   return (
     <div className="purchase-ticket-container">
       {ticket ? (
         <div className="ticket-details-and-payment">
           <div className="ticket-info">
             <h1>{ticket.eventName}</h1>
-            <p>Description: {ticket.description}</p>
-            <p>Venue: {ticket.venue}</p>
-            <p>Date: {new Date(ticket.date).toLocaleDateString()}</p>
             <p>
-              Time Slot: {ticket.beginTime} - {ticket.endTime}
+              <strong>Description:</strong> {ticket.description}
             </p>
-            <p>Price: €{ticket.price}</p>
+            <p>
+              <strong>Venue:</strong> {ticket.venue}
+            </p>
+            <p>
+              <strong>Date:</strong>{" "}
+              {new Date(ticket.date).toLocaleDateString()}
+            </p>
+            <p>
+              <strong>Time Slot:</strong> {ticket.beginTime} - {ticket.endTime}
+            </p>
+            <p>
+              <strong>Price per Ticket:</strong> €{ticket.price}
+            </p>
           </div>
           <div className="payment-info">
             {clientSecret && (
               <Elements stripe={stripePromise} options={{ clientSecret }}>
-                <CheckoutForm ticket={ticket} />
+                <CheckoutForm
+                  ticket={ticket}
+                  quantity={quantity}
+                  setQuantity={setQuantity}
+                  totalPrice={totalPrice}
+                />
               </Elements>
             )}
           </div>

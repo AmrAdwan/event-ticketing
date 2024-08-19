@@ -8,6 +8,7 @@ import Tickets from "./components/Tickets";
 import Home from "./components/Home";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import OrderSuccess from "./components/OrderSuccess";
 import PurchaseTicket from "./components/PurchaseTicket";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
@@ -40,6 +41,7 @@ function App() {
               <Route path="/tickets" element={<Tickets />} />
               <Route path="/event/:urlSlug" element={<EventDetails />} />
               <Route path="/ticket/:urlSlug" element={<PurchaseTicket />} />
+              <Route path="/order-success" element={<OrderSuccess />} />
             </Routes>
           </div>
         </div>
