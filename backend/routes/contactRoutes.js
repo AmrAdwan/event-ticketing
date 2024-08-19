@@ -1,4 +1,3 @@
-// backend/routes/contactRoutes.js
 const express = require("express");
 const nodemailer = require("nodemailer");
 const router = express.Router();
@@ -9,6 +8,9 @@ router.post(
   [
     check("name", "Name is required").not().isEmpty(),
     check("email", "Please include a valid email").isEmail(),
+    check("phone", "Please include a valid phone number").matches(
+      /^\+?[0-9]{10,15}$/
+    ),
     check("message", "Message is required").not().isEmpty(),
   ],
   async (req, res) => {
@@ -17,30 +19,23 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, message } = req.body;
+    const { name, email, phone, message } = req.body;
 
     // Configure nodemailer
     let transporter = nodemailer.createTransport({
-      service: "outlook", // or your preferred email service
+      service: "outlook",
       auth: {
-        user: process.env.EMAIL_USER, // Add your email user in .env
-        pass: process.env.EMAIL_PASS, // Add your email password in .env
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
     // Email options
-    // let mailOptions = {
-    //   from: email,
-    //   to: process.env.EMAIL_USER, // Add the receiver email in .env
-    //   subject: `Contact Form Submission from ${name}`,
-    //   text: message,
-    // };
-
     let mailOptions = {
       from: process.env.EMAIL_USER, // Use the authenticated email as the sender
-      to: process.env.EMAIL_USER, // Your email address
+      to: process.env.EMAIL_USER,
       subject: `Contact Form Submission from ${name}`,
-      text: `You have received a new message from ${name} (${email}):\n\n${message}`,
+      text: `You have received a new message from ${name} (${email}, ${phone}):\n\n${message}`,
       replyTo: email, // Set the reply-to header to the user's email
     };
 

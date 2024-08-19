@@ -11,6 +11,8 @@ const Tickets = () => {
   const [editedDescription, setEditedDescription] = useState("");
   const [editedVenue, setEditedVenue] = useState("");
   const [editedDate, setEditedDate] = useState("");
+  const [editedBeginTime, setEditedBeginTime] = useState("");
+  const [editedEndTime, setEditedEndTime] = useState("");
   const [editedPrice, setEditedPrice] = useState("");
   const [editedQuantity, setEditedQuantity] = useState("");
 
@@ -58,6 +60,8 @@ const Tickets = () => {
     setEditedDescription(ticket.description);
     setEditedVenue(ticket.venue);
     setEditedDate(new Date(ticket.date).toISOString().split("T")[0]);
+    setEditedBeginTime(ticket.beginTime);
+    setEditedEndTime(ticket.endTime);
     setEditedPrice(ticket.price);
     setEditedQuantity(ticket.quantity);
   };
@@ -74,6 +78,8 @@ const Tickets = () => {
         description: editedDescription,
         venue: editedVenue,
         date: editedDate,
+        beginTime: editedBeginTime,
+        endTime: editedEndTime,
         price: editedPrice,
         quantity: editedQuantity,
       };
@@ -145,6 +151,16 @@ const Tickets = () => {
                   type="date"
                   value={editedDate}
                   onChange={(e) => setEditedDate(e.target.value)}
+                />
+                <input
+                  type="time"
+                  value={editedBeginTime}
+                  onChange={(e) => setEditedBeginTime(e.target.value)}
+                />
+                <input
+                  type="time"
+                  value={editedEndTime}
+                  onChange={(e) => setEditedEndTime(e.target.value)}
                 />
                 <input
                   type="number"

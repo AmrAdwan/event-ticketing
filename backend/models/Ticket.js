@@ -18,6 +18,14 @@ const TicketSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  beginTime: {
+    type: String,
+    required: true,
+  },
+  endTime: {
+    type: String,
+    required: true,
+  },
   price: {
     type: Number,
     required: true,

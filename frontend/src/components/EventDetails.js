@@ -39,6 +39,9 @@ const EventDetails = () => {
         <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
       </p>
       <p>
+        <strong>Time Slot:</strong> {event.beginTime} - {event.endTime}
+      </p>
+      <p>
         <strong>Price:</strong> €{event.price}
       </p>
       <p>

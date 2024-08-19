@@ -6,6 +6,8 @@ const AddTicket = () => {
   const [description, setDescription] = useState("");
   const [venue, setVenue] = useState("");
   const [date, setDate] = useState("");
+  const [beginTime, setBeginTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [errors, setErrors] = useState({});
@@ -24,6 +26,12 @@ const AddTicket = () => {
     }
     if (!date.trim()) {
       validationErrors.date = "Date is required.";
+    }
+    if (!beginTime.trim()) {
+      validationErrors.beginTime = "Begin Time is required.";
+    }
+    if (!endTime.trim()) {
+      validationErrors.endTime = "End Time is required.";
     }
     if (!price) {
       validationErrors.price = "Price is required.";
@@ -47,7 +55,16 @@ const AddTicket = () => {
       return;
     }
 
-    const newTicket = { eventName, description, venue, date, price, quantity };
+    const newTicket = {
+      eventName,
+      description,
+      venue,
+      date,
+      beginTime,
+      endTime,
+      price,
+      quantity,
+    };
 
     // Debugging: Log the state before sending
     console.log("Submitting the following data:", newTicket);
@@ -69,6 +86,8 @@ const AddTicket = () => {
         setDescription("");
         setVenue("");
         setDate("");
+        setBeginTime("");
+        setEndTime("");
         setPrice("");
         setQuantity("");
         setErrors({});
@@ -146,6 +165,36 @@ const AddTicket = () => {
                 />
                 {errors.date && (
                   <div className="invalid-feedback">{errors.date}</div>
+                )}
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Begin Time:</label>
+                <input
+                  type="time"
+                  className={`form-control ${
+                    errors.beginTime ? "is-invalid" : ""
+                  }`}
+                  value={beginTime}
+                  onChange={(e) => setBeginTime(e.target.value)}
+                  required
+                />
+                {errors.beginTime && (
+                  <div className="invalid-feedback">{errors.beginTime}</div>
+                )}
+              </div>
+              <div className="mb-3">
+                <label className="form-label">End Time:</label>
+                <input
+                  type="time"
+                  className={`form-control ${
+                    errors.endTime ? "is-invalid" : ""
+                  }`}
+                  value={endTime}
+                  onChange={(e) => setEndTime(e.target.value)}
+                  required
+                />
+                {errors.endTime && (
+                  <div className="invalid-feedback">{errors.endTime}</div>
                 )}
               </div>
               <div className="mb-3">

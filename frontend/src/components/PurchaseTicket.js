@@ -11,9 +11,6 @@ import {
 import axios from "axios";
 import "./PurchaseTicket.css";
 
-// const stripePromise = loadStripe(
-//   "pk_test_51Po4lpRwNfXRCkG3q7ikkfS2huBeY0l7XZ0IH743dOsqozFPrHemgojkLgiLDcPrsh9Zl6O1EP4g1oIhj8kf4pwl00AlZRY9pE"
-// );
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 const CheckoutForm = ({ ticket }) => {
@@ -116,6 +113,9 @@ const PurchaseTicket = () => {
             <p>Description: {ticket.description}</p>
             <p>Venue: {ticket.venue}</p>
             <p>Date: {new Date(ticket.date).toLocaleDateString()}</p>
+            <p>
+              Time Slot: {ticket.beginTime} - {ticket.endTime}
+            </p>
             <p>Price: €{ticket.price}</p>
           </div>
           <div className="payment-info">

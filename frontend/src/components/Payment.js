@@ -8,9 +8,6 @@ import {
 } from "@stripe/react-stripe-js";
 import axios from "axios";
 
-// const stripePromise = loadStripe(
-//   "pk_test_51Po4lpRwNfXRCkG3q7ikkfS2huBeY0l7XZ0IH743dOsqozFPrHemgojkLgiLDcPrsh9Zl6O1EP4g1oIhj8kf4pwl00AlZRY9pE"
-// );
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 const CheckoutForm = () => {
