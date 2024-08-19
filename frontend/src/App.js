@@ -6,6 +6,8 @@ import Register from "./components/Register";
 import AddTicket from "./components/AddTicket";
 import Tickets from "./components/Tickets";
 import Home from "./components/Home";
+import About from "./components/About";
+import Contact from "./components/Contact";
 import PurchaseTicket from "./components/PurchaseTicket";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
@@ -23,6 +25,8 @@ function App() {
           <div className="container">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route
