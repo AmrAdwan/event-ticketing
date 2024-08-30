@@ -4,68 +4,86 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #1e1e1e;
-  color: white;
+  width: 100%; /* Full width for container */
+  background-color: #000000; /* Updated background color */
+  color: #333; /* Darker text color for better readability */
   padding: 20px;
   box-sizing: border-box;
+  animation: fadeIn 0.5s ease-in-out; /* Fade-in animation for container */
 }
 
 .ticket-details-and-payment {
   display: flex;
-  gap: 40px;
-  max-width: 900px;
-  width: 100%;
-  background-color: #2a2a2a;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  flex-direction: row;
+  gap: 30px; /* Adjust the space between the two sections */
+  align-items: flex-start;
+  background-color: white; /* White background for the card effect */
+  padding: 30px;
+  border-radius: 12px; /* Slightly increased border radius for a softer card look */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  width: 100%; /* Full width to adapt to container */
+  max-width: 1200px; /* Limit max width for larger screens */
+  transition: transform 0.3s ease; /* Smooth transition for hover effect */
+  margin: 20px; /* Add margin for spacing */
+}
+
+.ticket-details-and-payment:hover {
+  transform: translateY(-10px); /* Lift effect on hover */
 }
 
 .ticket-info {
-  flex: 1;
+  width: 45%; /* Percentage width for responsiveness */
   text-align: left;
-}
-
-.ticket-info h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.ticket-info p {
-  font-size: 16px;
-  margin-bottom: 10px;
+  line-height: 1.6; /* Improve readability */
+  font-size: 16px; /* Comfortable font size */
+  animation: slideInLeft 0.6s ease; /* Slide-in animation from left */
 }
 
 .payment-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  width: 55%; /* Percentage width for responsiveness */
+  animation: slideInRight 0.6s ease; /* Slide-in animation from right */
 }
 
+/* Payment elements */
 .custom-payment-element {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; /* White background for a clean look */
+  padding: 15px;
+  border-radius: 5px;
+  color: #333; /* Darker text color */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Light shadow for subtle depth */
 }
 
-.price-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 18px;
+/* Divider */
+.divider {
+  width: 100%;
+  border: 1px solid #ddd; /* Light border for subtle separation */
   margin: 20px 0;
 }
 
+/* Pay button styling */
+.pay-button {
+  background-color: #04b734; /* Stripe blue color */
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
+}
+
+.pay-button:hover {
+  background-color: #0056b3; /* Darker blue for hover effect */
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Quantity controls */
 .ticket-quantity {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-}
-
-.ticket-quantity label {
-  margin-right: 10px;
-  font-size: 16px;
+  animation: fadeInUp 0.7s ease; /* Fade-in and move-up animation */
 }
 
 .quantity-controls {
@@ -73,44 +91,90 @@
   align-items: center;
 }
 
-.quantity-controls button {
-  background-color: #5dc4e6;
+.ticket-quantity label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.ticket-quantity button {
+  background-color: #007bff;
   color: white;
   border: none;
-  padding: 8px 12px;
-  font-size: 16px;
+  padding: 5px 10px;
+  font-size: 14px;
   cursor: pointer;
   border-radius: 5px;
-  margin: 0 10px;
+  margin: 0 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
 }
 
-.quantity-controls button:disabled {
-  background-color: #ccc;
+.ticket-quantity button:disabled {
+  background-color: #ccc; /* Disabled button styling */
+  cursor: not-allowed; /* Change cursor to indicate non-interaction */
 }
 
-.quantity-controls span {
+.ticket-quantity button:hover:not(:disabled) {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+.ticket-quantity span {
   font-size: 18px;
   margin: 0 10px;
 }
 
-.divider {
-  width: 100%;
-  border: 1px solid #444;
-  margin: 20px 0;
+/* Keyframe animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.pay-button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: center;
-  width: 100%;
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
-.pay-button:hover {
-  background-color: #0056b3;
+@keyframes slideInRight {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ticket-details-and-payment {
+    flex-direction: column; /* Stack on smaller screens */
+    width: 90%; /* Reduce width for smaller screens */
+  }
+
+  .ticket-info,
+  .payment-info {
+    width: 100%; /* Full width for each section */
+    margin-bottom: 20px; /* Add spacing between sections */
+  }
 }

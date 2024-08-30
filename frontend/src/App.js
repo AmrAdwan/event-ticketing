@@ -8,6 +8,7 @@ import Tickets from "./components/Tickets";
 import Home from "./components/Home";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import Account from "./components/UserProfile";
 import OrderSuccess from "./components/OrderSuccess";
 import PurchaseTicket from "./components/PurchaseTicket";
 import PrivateRoute from "./components/PrivateRoute";
@@ -38,6 +39,7 @@ function App() {
                   </PrivateRoute>
                 }
               />
+              <Route path="/account" element={<Account />} />
               <Route path="/tickets" element={<Tickets />} />
               <Route path="/event/:urlSlug" element={<EventDetails />} />
               <Route path="/ticket/:urlSlug" element={<PurchaseTicket />} />

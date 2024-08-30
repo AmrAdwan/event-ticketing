@@ -20,6 +20,9 @@ app.use(
   })
 );
 
+const userRoutes = require("./routes/userRoutes");
+app.use("/api/user", userRoutes);
+
 // app.use("/api/tickets", require("./routes/ticketRoutes"));
 app.use(
   "/api/tickets",
