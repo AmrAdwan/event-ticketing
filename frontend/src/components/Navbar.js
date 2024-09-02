@@ -19,7 +19,7 @@ const Navbar = () => {
     >
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          Event Ticketing
+          <i className="fas fa-ticket-alt"></i> Event Ticketing
         </Link>
         <button
           className="navbar-toggler"
@@ -36,24 +36,24 @@ const Navbar = () => {
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link className="nav-link" to="/">
-                Home
+                <i className="fas fa-home"></i> Home
               </Link>
             </li>
             {user ? (
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/add-ticket">
-                    Add Ticket
+                    <i className="fas fa-plus-circle"></i> Add Ticket
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/tickets">
-                    My Tickets
+                    <i className="fas fa-ticket-alt"></i> My Tickets
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/account">
-                    Account
+                    <i className="fas fa-user"></i> Account
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -61,7 +61,7 @@ const Navbar = () => {
                     className="btn btn-link nav-link"
                     onClick={handleLogout}
                   >
-                    Logout
+                    <i className="fas fa-sign-out-alt"></i> Logout
                   </button>
                 </li>
               </>
@@ -69,24 +69,24 @@ const Navbar = () => {
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/login">
-                    Login
+                    <i className="fas fa-sign-in-alt"></i> Login
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/register">
-                    Register
+                    <i className="fas fa-user-plus"></i> Register
                   </Link>
                 </li>
               </>
             )}
             <li className="nav-item">
               <Link className="nav-link" to="/about">
-                About Us
+                <i className="fas fa-info-circle"></i> About Us
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/contact">
-                Contact
+                <i className="fas fa-envelope"></i> Contact
               </Link>
             </li>
           </ul>

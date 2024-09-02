@@ -8,6 +8,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -28,17 +29,35 @@ const Register = () => {
       setError("Password must be at least 6 characters long.");
       return;
     }
+    if (!confirmPassword) {
+      setError("You need to confirm your password.");
+      return;
+    } else if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
 
     try {
-      await register(name, email, password);
+      await register(name, email, password, confirmPassword); // Include confirmPassword
       navigate("/login"); // Redirect to login page after registration
     } catch (error) {
       console.error("Registration failed:", error);
       if (
         error.response &&
-        error.response.data.message.includes("Email already exists")
+        error.response.data.errors &&
+        error.response.data.errors.some(
+          (err) => err.msg === "User already exists"
+        )
       ) {
         setError("Email is already registered.");
+      } else if (
+        error.response &&
+        error.response.data.errors &&
+        error.response.data.errors.some((err) =>
+          err.msg.includes("Passwords do not match")
+        )
+      ) {
+        setError("Passwords do not match.");
       } else {
         setError("An error occurred during registration.");
       }
@@ -53,7 +72,6 @@ const Register = () => {
             <div className="text-center mb-4">
               <img src={registerImage} alt="Register" className="img-fluid" />
             </div>
-            {/* <h2 className="h4 text-center mb-4">Register</h2> */}
             <form onSubmit={handleSubmit} noValidate>
               {error && <div className="alert alert-danger">{error}</div>}
               <div className="mb-3">
@@ -82,6 +100,16 @@ const Register = () => {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="form-control"
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label>Confirm Password:</label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   className="form-control"
                   required
                 />

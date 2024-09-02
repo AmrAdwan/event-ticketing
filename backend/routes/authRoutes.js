@@ -16,6 +16,7 @@ router.post(
     check("password", "Password must be at least 6 characters").isLength({
       min: 6,
     }),
+    check("confirmPassword", "Confirm password is required").not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -23,12 +24,21 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { name, email, password, confirmPassword } = req.body;
+
+    // Check if password and confirmPassword match
+    if (password !== confirmPassword) {
+      return res
+        .status(400)
+        .json({ errors: [{ msg: "Passwords do not match" }] });
+    }
 
     try {
       let user = await User.findOne({ email });
       if (user) {
-        return res.status(400).json({ msg: "User already exists" });
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "User already exists" }] });
       }
 
       user = new User({ name, email, password });

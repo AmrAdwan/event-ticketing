@@ -10,7 +10,9 @@ const UserProfile = () => {
   const [userData, setUserData] = useState({
     name: "",
     email: "",
-    password: "",
+    oldPassword: "", // Add old password field
+    newPassword: "", // Add new password field
+    confirmPassword: "", // Add confirm new password field
   });
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -27,7 +29,9 @@ const UserProfile = () => {
         setUserData({
           name: response.data.name,
           email: response.data.email,
-          password: "",
+          oldPassword: "",
+          newPassword: "",
+          confirmPassword: "",
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -64,6 +68,21 @@ const UserProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!userData.oldPassword) {
+      setError("Old password is needed");
+      return;
+    }
+
+    if (
+      userData.newPassword &&
+      userData.newPassword !== userData.confirmPassword
+    ) {
+      setError("New password and confirmation password do not match.");
+      setSuccessMessage("");
+      return;
+    }
+
     try {
       const response = await axios.put(
         "http://localhost:5000/api/user/profile",
@@ -84,8 +103,10 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4">User Profile</h2>
+    <div className="user-container">
+      <h2 className="mb-4" style={{ marginLeft: "35%" }}>
+        User Profile
+      </h2>
       {error && <div className="alert alert-danger">{error}</div>}
       {successMessage && (
         <div className="alert alert-success">{successMessage}</div>
@@ -126,15 +147,39 @@ const UserProfile = () => {
           />
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="password">New Password:</label>
+          <label htmlFor="oldPassword">Old Password:</label>
           <input
             type="password"
-            id="password"
-            name="password"
+            id="oldPassword"
+            name="oldPassword"
             className="form-control"
-            value={userData.password}
+            value={userData.oldPassword}
+            onChange={handleChange}
+            placeholder="Enter your old password"
+          />
+        </div>
+        <div className="form-group mb-3">
+          <label htmlFor="newPassword">New Password:</label>
+          <input
+            type="password"
+            id="newPassword"
+            name="newPassword"
+            className="form-control"
+            value={userData.newPassword}
             onChange={handleChange}
             placeholder="Leave blank to keep the current password"
+          />
+        </div>
+        <div className="form-group mb-3">
+          <label htmlFor="confirmPassword">Confirm New Password:</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            className="form-control"
+            value={userData.confirmPassword}
+            onChange={handleChange}
+            placeholder="Re-enter your new password"
           />
         </div>
         <button type="submit" className="btn btn-primary update-button">

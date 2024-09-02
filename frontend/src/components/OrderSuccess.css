@@ -3,7 +3,6 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f5f5f5;
   padding: 20px;
 }
 
@@ -41,7 +40,7 @@
   padding: 12px 30px;
   font-size: 1rem;
   color: #ffffff;
-  background-color: #007bff;
+  background-color: #147ba7;
   border: none;
   border-radius: 5px;
   text-decoration: none;
@@ -49,7 +48,7 @@
 }
 
 .order-success-button:hover {
-  background-color: #0056b3;
+  background-color: #01b196;
 }
 
 @media (max-width: 768px) {

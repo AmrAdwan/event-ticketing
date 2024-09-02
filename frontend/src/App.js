@@ -16,6 +16,7 @@ import { AuthProvider } from "./context/AuthContext";
 import EventDetails from "./components/EventDetails";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./App.css";
 
 function App() {
@@ -39,8 +40,22 @@ function App() {
                   </PrivateRoute>
                 }
               />
-              <Route path="/account" element={<Account />} />
-              <Route path="/tickets" element={<Tickets />} />
+              <Route
+                path="/account"
+                element={
+                  <PrivateRoute>
+                    <Account />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/tickets"
+                element={
+                  <PrivateRoute>
+                    <Tickets />
+                  </PrivateRoute>
+                }
+              />
               <Route path="/event/:urlSlug" element={<EventDetails />} />
               <Route path="/ticket/:urlSlug" element={<PurchaseTicket />} />
               <Route path="/order-success" element={<OrderSuccess />} />
